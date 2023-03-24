@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/black"
+    android:fitsSystemWindows="true"
+    android:statusBarColor="@color/black">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/black">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/btnBack"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="match_parent"
+                android:padding="@dimen/margin_medium_3"
+                android:src="@drawable/ic_back" />
+
+            <ImageView
+                android:id="@+id/btnDone"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:padding="@dimen/margin_medium_3"
+                android:src="@drawable/ic_done"
+                android:visibility="invisible"/>
+
+        </RelativeLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+<!--        android:fillViewport="true">    &lt;!&ndash;sec edt ရဲ့ height ကို match_parent အပြည့်ယူဖို့ but fitSystemWindow error&ndash;&gt;-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:isScrollContainer="true"
+            android:focusableInTouchMode="true">
+
+            <EditText
+                android:id="@+id/etTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin_medium_2"
+                android:background="@android:color/transparent"
+                android:textColor="@color/white"
+                android:imeOptions="actionNext"
+                android:hint="@string/lbl_title"
+                android:textColorHint="@color/colorSecondaryText"
+                android:singleLine="true" />
+
+            <EditText
+                android:id="@+id/etText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/margin_medium_2"
+                android:background="@android:color/transparent"
+                android:gravity="top|start"
+                android:textColor="@color/white"
+                android:textColorHint="@color/colorSecondaryText"
+                android:hint="Type here ..."
+                android:inputType="textMultiLine"
+                android:maxLines="100" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

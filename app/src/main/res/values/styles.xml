@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="SearchViewQueryColor">
+        <item name="android:textColorHint">@color/pickLightBlue</item>
+        <item name="android:textColor">@color/pickLightBlue</item>
+    </style>
+
+</resources>

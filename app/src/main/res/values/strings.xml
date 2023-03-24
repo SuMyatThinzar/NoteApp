@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Note</string>
+    <string name="lbl_title">Title</string>
+    <string name="lbl_pin">Pin</string>
+    <string name="lbl_delete">Delete</string>
+    <string name="lbl_long">Long</string>
+    <string name="lbl_single">Single</string>
+    <string name="lbl_create_new_note">Create new note</string>
+</resources>
