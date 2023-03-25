@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.Window
 import android.widget.LinearLayout
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -28,6 +29,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
     private lateinit var mPresenter: HomePresenter
 
     private lateinit var mNoteAdapter: NoteAdapter
+    private var mNoteList: List<NoteVO> = listOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +63,29 @@ class HomeActivity : AppCompatActivity(), HomeView {
             layoutParams.setMargins(0, 0, 0, 0)
             binding.rvNoteList.layoutParams = layoutParams
         }
+
+        val searchedNotes: MutableList<NoteVO> = mutableListOf()
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                searchedNotes.clear()
+                mNoteList.forEach {
+                    if (newText != null) {
+                        if (it.title.lowercase().contains(newText.lowercase(), true) ||
+                            (it.content?.lowercase()?.contains(newText.lowercase(), true) == true)
+                        ) {
+                            searchedNotes.add(it)
+                        }
+                    }
+                }
+                mNoteAdapter.setNewData(searchedNotes)
+                return true
+            }
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+        })
     }
 
     private fun setUpAdapters() {
@@ -72,7 +97,6 @@ class HomeActivity : AppCompatActivity(), HomeView {
             mNoteAdapter = NoteAdapter(mPresenter)
             adapter = mNoteAdapter
             layoutManager = StaggeredGridLayoutManager(2, LinearLayout.VERTICAL)
-
         }
     }
 
@@ -81,6 +105,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
     }
 
     override fun showNoteList(noteList: List<NoteVO>) {
+        mNoteList = noteList
         mNoteAdapter.setNewData(noteList)
     }
 

@@ -42,7 +42,7 @@ class CreateNotePresenterImpl : CreateNotePresenter, AbstractBasePresenter<Creat
                 if (title == "")
                     mNoteModel.insertNote(NoteVO(title = "title", content = content, id = newId, date = formattedDate))
             } else {
-                mNoteModel.insertNote(NoteVO(title = title, content = content, id = newId, date = date))
+                mNoteModel.insertNote(NoteVO(title = title, content = content, id = newId, date = formattedDate))
             }
         }
         // edit note
