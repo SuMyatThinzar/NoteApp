@@ -9,6 +9,7 @@ import com.smtz.note.R
 import com.smtz.note.data.vos.NoteVO
 import com.smtz.note.databinding.ViewItemNoteBinding
 import com.smtz.note.delegates.NoteDelegate
+import com.smtz.note.utils.MONTHS_ARRAY
 import com.smtz.note.utils.SELECTED_ITEM_SCALE
 import com.smtz.note.utils.mNoteList
 
@@ -18,6 +19,7 @@ class NoteViewHolder(private val binding: ViewItemNoteBinding, private val mDele
 
     init {
         binding.root.setOnClickListener {
+            // additional setting အတွက် select လုပ်ထားတဲ့ list
             var selectedNoteCount = 0
 
             mNoteList.forEach {
@@ -25,6 +27,7 @@ class NoteViewHolder(private val binding: ViewItemNoteBinding, private val mDele
                     selectedNoteCount++
                 }
             }
+            // LongClick to SingleClick
             when (selectedNoteCount) {
                 0 -> mDataVO?.let { mDelegate.onTapNote(it.id) }
                 else -> setListener()
@@ -54,6 +57,7 @@ class NoteViewHolder(private val binding: ViewItemNoteBinding, private val mDele
 
         binding.tvTitle.text = data.title
         binding.tvContent.text = data.content
+        binding.tvDate.text = data.date
 
         when (position % 6) {
             0 -> changeColor(R.color.pickBlue, true)

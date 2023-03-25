@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.smtz.note.adapters.NoteAdapter
@@ -70,8 +71,7 @@ class HomeActivity : AppCompatActivity(), HomeView {
         binding.rvNoteList.apply {
             mNoteAdapter = NoteAdapter(mPresenter)
             adapter = mNoteAdapter
-            layoutManager =
-                GridLayoutManager(applicationContext, 2, GridLayoutManager.VERTICAL, false)
+            layoutManager = StaggeredGridLayoutManager(2, LinearLayout.VERTICAL)
 
         }
     }

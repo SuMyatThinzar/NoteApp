@@ -16,5 +16,9 @@ data class NoteVO(
     @ColumnInfo(name = "id")
     val id: Long,
 
-    var checked: Boolean? = false
-)
+    var checked: Boolean? = false,
+
+    @ColumnInfo(name = "date")
+    val date: String?,
+
+    )

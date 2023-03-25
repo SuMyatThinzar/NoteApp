@@ -9,6 +9,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
@@ -79,9 +80,9 @@ class CreateNoteActivity : AppCompatActivity(), CreateNoteView {
 
         binding.btnDone.setOnClickListener {
             if (mNote == null) {
-                mPresenter.onTapDone(binding.etTitle.text.toString(), binding.etText.text.toString(), 0L)
+                mPresenter.onTapDone(binding.etTitle.text.toString(), binding.etText.text.toString(), 0L, "")
             } else {
-                mPresenter.onTapDone(binding.etTitle.text.toString(), binding.etText.text.toString(), mNote!!.id)
+                mPresenter.onTapDone(binding.etTitle.text.toString(), binding.etText.text.toString(), mNote!!.id, mNote!!.date?:"")
             }
 
             imm.hideSoftInputFromWindow(window.decorView.windowToken, 0)
@@ -117,5 +118,6 @@ class CreateNoteActivity : AppCompatActivity(), CreateNoteView {
 
     override fun showError(message: String) {
         Snackbar.make(window.decorView, message, Snackbar.LENGTH_LONG).show()
+        Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
     }
 }
