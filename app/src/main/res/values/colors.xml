@@ -14,10 +14,14 @@
     <color name="colorAccent">#181818</color>
     <color name="colorSecondaryText">#71757A</color>
 
-    <color name="pickGreen">#67ff85</color>
-    <color name="pickLightBlue">#c0d1e4</color>
-    <color name="pickPeach">#f5f5f5</color>
-    <color name="pickYellow">#effa43</color>
-    <color name="pickPurple">#B059E1</color>
-    <color name="pickBlue">#7870D4</color>
+    <color name="pickGreen">#014600</color>
+    <color name="pickLightBlue">#314151</color>
+    <color name="pickPeach">#252525</color>
+    <color name="pickBlue">#4D4886</color>
+
+    <color name="pick_color_1">#36185B</color>
+    <color name="pick_color_2">#254D6F</color>
+    <color name="pick_color_3">#00585A</color>
+    <color name="pick_color_4">#5B4A40</color>
+
 </resources>

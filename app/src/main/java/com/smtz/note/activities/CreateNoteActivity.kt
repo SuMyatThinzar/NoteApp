@@ -2,7 +2,6 @@ package com.smtz.note.activities
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Rect
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -60,23 +59,24 @@ class CreateNoteActivity : AppCompatActivity(), CreateNoteView {
 
     private fun setUpListeners() {
         binding.btnBack.setOnClickListener {
-            super.onBackPressed()
+            finish()
         }
 
         // ဒီ activity ကို‌ရောက်တာနဲ့ etText ကို autoFocus ပြီး keyboard ပေါ်အောင်လုပ်
         binding.etText.requestFocus()
+
         // .post to run a delayed task and set cursor position to the end
         binding.etText.post {
             binding.etText.setSelection(binding.etText.text.length)
         }
+
         // SoftKeyboard ပေါ်အောင်လုပ်
         val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
 
-
         // text မရှိရင် Done button ပျောက်
-        textChangedListener(binding.etTitle)
-        textChangedListener(binding.etText)
+        setUpTextChangedListener(binding.etTitle)
+        setUpTextChangedListener(binding.etText)
 
         binding.btnDone.setOnClickListener {
             if (mNote == null) {
@@ -90,11 +90,11 @@ class CreateNoteActivity : AppCompatActivity(), CreateNoteView {
         }
     }
 
-    private fun textChangedListener(edt: EditText) {
+    private fun setUpTextChangedListener(edt: EditText) {
         edt.addTextChangedListener(object : TextWatcher {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s.isNullOrEmpty()) {
+                if (s.isNullOrEmpty() && binding.etText.text.trim().toString() == "") {
                     binding.btnDone.visibility = View.INVISIBLE
                 } else {
                     binding.btnDone.visibility = View.VISIBLE

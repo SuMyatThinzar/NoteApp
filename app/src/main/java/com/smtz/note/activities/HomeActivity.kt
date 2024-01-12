@@ -1,27 +1,19 @@
 package com.smtz.note.activities
 
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.view.Window
 import android.widget.LinearLayout
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.smtz.note.adapters.NoteAdapter
 import com.smtz.note.data.vos.NoteVO
 import com.smtz.note.databinding.ActivityHomeBinding
 import com.smtz.note.presenters.HomePresenter
 import com.smtz.note.presenters.HomePresenterImpl
-import com.smtz.note.utils.mNoteList
 import com.smtz.note.views.HomeView
-
 
 class HomeActivity : AppCompatActivity(), HomeView {
 
@@ -41,6 +33,12 @@ class HomeActivity : AppCompatActivity(), HomeView {
         setUpAdapters()
 
         mPresenter.onUiReady(this)
+    }
+
+    // searchView is focusing and keyboard is appearing for returning with onBackPressed() from another activity
+    override fun onResume() {
+        super.onResume()
+        binding.searchView.clearFocus()
     }
 
     private fun setUpPresenter() {
@@ -122,12 +120,10 @@ class HomeActivity : AppCompatActivity(), HomeView {
     }
 
     override fun showAdditionalSetting() {
-
         additionalSetting(true)
     }
 
     override fun hideAdditionalSetting() {
-
         additionalSetting(false)
     }
 

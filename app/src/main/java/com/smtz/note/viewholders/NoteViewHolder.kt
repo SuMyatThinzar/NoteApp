@@ -59,13 +59,15 @@ class NoteViewHolder(private val binding: ViewItemNoteBinding, private val mDele
         binding.tvContent.text = data.content
         binding.tvDate.text = data.date
 
-        when (position % 6) {
+        when (position % 8) {
             0 -> changeColor(R.color.pickBlue, true)
             1 -> changeColor(R.color.pickGreen, false)
             2 -> changeColor(R.color.pickLightBlue, false)
             3 -> changeColor(R.color.pickPeach, false)
-            4 -> changeColor(R.color.pickYellow, false)
-            5 -> changeColor(R.color.pickPurple, true)
+            4 -> changeColor(R.color.pick_color_1, false)
+            5 -> changeColor(R.color.pick_color_2, true)
+            6 -> changeColor(R.color.pick_color_3, true)
+            7 -> changeColor(R.color.pick_color_4, true)
         }
 
         smallerView(false)
@@ -74,14 +76,14 @@ class NoteViewHolder(private val binding: ViewItemNoteBinding, private val mDele
     private fun changeColor(color: Int, txtWhite: Boolean) {
         binding.root.backgroundTintList = ContextCompat.getColorStateList(binding.root.context, color)
 
-        if (txtWhite) {
-            binding.tvTitle.setTextColor(ContextCompat.getColor(binding.root.context, R.color.white))
-            binding.tvContent.setTextColor(ContextCompat.getColor(binding.root.context, R.color.white))
-        } else {
-            binding.tvTitle.setTextColor(ContextCompat.getColor(binding.root.context,R.color.black))
-            binding.tvContent.setTextColor(ContextCompat.getColor(binding.root.context,R.color.black))
-            binding.line.setImageDrawable(ContextCompat.getDrawable(binding.root.context, R.drawable.background_line_black))
-        }
+//        if (txtWhite) {
+//            binding.tvTitle.setTextColor(ContextCompat.getColor(binding.root.context, R.color.white))
+//            binding.tvContent.setTextColor(ContextCompat.getColor(binding.root.context, R.color.white))
+//        } else {
+//            binding.tvTitle.setTextColor(ContextCompat.getColor(binding.root.context,R.color.black))
+//            binding.tvContent.setTextColor(ContextCompat.getColor(binding.root.context,R.color.black))
+//            binding.line.setImageDrawable(ContextCompat.getDrawable(binding.root.context, R.drawable.background_line_black))
+//        }
     }
 
     private fun smallerView(changeView: Boolean) {

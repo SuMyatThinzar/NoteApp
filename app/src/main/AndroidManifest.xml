@@ -15,7 +15,7 @@
         android:icon="@drawable/ic_note"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Note.TransparentStatusBar"
+        android:theme="@style/Theme.Note"
         tools:targetApi="31">
         <activity
             android:name=".activities.HomeActivity"

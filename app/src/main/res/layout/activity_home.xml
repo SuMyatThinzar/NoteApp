@@ -7,33 +7,6 @@
     tools:context=".activities.HomeActivity"
     android:background="@color/black">
 
-<!--        <com.google.android.material.appbar.AppBarLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@color/black">-->
-
-<!--            <com.google.android.material.appbar.CollapsingToolbarLayout-->
-<!--                android:id="@+id/toolBarLayout"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="@dimen/collapsing_toolbar_height"-->
-<!--                app:statusBarScrim="@color/black"-->
-<!--                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"-->
-<!--                app:collapsedTitleGravity="center"-->
-<!--                app:expandedTitleGravity="bottom"-->
-<!--                app:collapsedTitleTextColor="@color/white"-->
-<!--                app:expandedTitleTextColor="@color/white"-->
-<!--                app:scrimAnimationDuration="3000">-->
-
-<!--                <androidx.appcompat.widget.Toolbar-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="?attr/actionBarSize"-->
-<!--                    app:layout_collapseMode="pin"-->
-<!--                    app:title="Notes"/>-->
-
-<!--            </com.google.android.material.appbar.CollapsingToolbarLayout>-->
-
-<!--        </com.google.android.material.appbar.AppBarLayout>-->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -43,7 +16,7 @@
             android:id="@+id/tvNote"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:text="Notes"
+            android:text="@string/lbl_notes"
             android:gravity="center_vertical"
             android:paddingStart="@dimen/margin_medium_2"
             android:paddingEnd="@dimen/margin_medium_2"
