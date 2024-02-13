@@ -1,8 +1,12 @@
 package com.smtz.note.presenters
 
+import android.provider.ContactsContract.CommonDataKinds.Note
+import android.util.Log
 import androidx.lifecycle.LifecycleOwner
+import com.smtz.note.common.NoteSingleton
 import com.smtz.note.data.models.NoteModel
 import com.smtz.note.data.models.NoteModelImpl
+import com.smtz.note.data.vos.NoteVO
 import com.smtz.note.utils.mNoteList
 import com.smtz.note.views.HomeView
 
@@ -17,31 +21,55 @@ class HomePresenterImpl : HomePresenter, AbstractBasePresenter<HomeView>() {
     }
 
     override fun onUiReady(owner: LifecycleOwner) {
-//        noteList = mNoteModel.getAllNotes() as MutableLiveData<List<NoteVO>>
-
         mNoteModel.getAllNotes()?.observe(owner) { noteList ->
-            mNoteList = noteList
-            mView.showNoteList(noteList)
+
+            val mPinnedList: MutableList<NoteVO> = mutableListOf()
+            val notes: MutableList<NoteVO> = mutableListOf()
+
+            mPinnedList.clear()
+            noteList.forEach {
+                if (it.isPinned == true) mPinnedList.add(it)
+                else notes.add(it)
+                mNoteList.add(it)  // temporary all noteList (mNoteModel.getNoteList() လို့ခေါ်လို့ရပေမယ့် double LiveData ဖြစ်နေလို့)
+            }
+            mPinnedList.sortByDescending { it.pinTimeStamp }
+            mPinnedList.addAll(notes.reversed())
+            mView.showNoteList(mPinnedList)
         }
     }
 
     // Home Screen's
     override fun onTapDeleteNote() {
-        // DB မှာ change တာ new data ပြန်သိမ်းမသိမ်း
-//        mNoteModel.insertAllNote(mNoteList)
-
-        mSelectedNotes.forEach {
-
-            mNoteList.forEach { note->
+        NoteSingleton.instance.getSelectedNoteList().forEach {
+            mNoteList.forEach { note ->
                 if (note.id == it) {
-                    if (note.checked == true) {
-                        mNoteModel.deleteNote(it)
+                    mNoteModel.deleteNote(it)
+                }
+            }
+        }
+        mView.showError("${NoteSingleton.instance.getSelectedNoteList().count()} note(s) deleted")
+        NoteSingleton.instance.cleanup()
+    }
+
+    override fun onTapPinNote() {
+        NoteSingleton.instance.getSelectedNoteList().forEach {
+            mNoteList.forEach { note ->
+                if (note.id == it) {
+
+                    if (note.isPinned == false) {
+                        note.isPinned = true
+                        note.pinTimeStamp = System.currentTimeMillis()
+                        mNoteModel.insertNote(note)
+                    } else {
+                        note.isPinned = false
+                        note.pinTimeStamp = 0L
+                        mNoteModel.insertNote(note)
                     }
                 }
             }
         }
-        mView.showError("${mSelectedNotes.count()} notes deleted")
-        mSelectedNotes = mutableListOf()
+        NoteSingleton.instance.cleanup()
+        mView.hideAdditionalSetting()
     }
 
     // Delegate's
@@ -50,51 +78,8 @@ class HomePresenterImpl : HomePresenter, AbstractBasePresenter<HomeView>() {
     }
 
     // checked ကို UI မှာပဲ change တာ DB မှာမ change ဘူး but mNoteList မှာတော့ change တယ်
-    override fun onLongClickNote(id: Long) {
-        // for the first time when mSelectedNote is empty
-        if (mSelectedNotes.isEmpty()) {
-            mSelectedNotes.add(id)
-            mView.showAdditionalSetting()
-
-            mNoteList.forEach {
-                if (it.id == id) {
-                    it.checked = true
-                }
-            }
-
-        } else {
-            var bool = true
-
-            // check if the note is selected or not
-            for (noteId in mSelectedNotes){
-                if (noteId == id) {
-                    bool = false
-                    break
-                } else {
-                    bool = true
-                }
-            }
-
-            // if the note is selected insert true false
-            if (bool) {
-                mSelectedNotes.add(id)
-                mNoteList.forEach{
-                    if (it.id == id) {
-                        it.checked = true
-                    }
-                }
-            } else {
-                mSelectedNotes.remove(id)
-                mNoteList.forEach{
-                    if (it.id == id) {
-                        it.checked = false
-                    }
-                }
-            }
-        }
-
-        // bind view with new data
-        if (mSelectedNotes.isEmpty()) {
+    override fun onLongClickNote() {
+        if (NoteSingleton.instance.getSelectedNoteList().isEmpty()) {
             mView.hideAdditionalSetting()
         } else {
             mView.showAdditionalSetting()
@@ -102,16 +87,7 @@ class HomePresenterImpl : HomePresenter, AbstractBasePresenter<HomeView>() {
     }
 
     override fun clearSelectedNotes() {
-        mSelectedNotes.forEach { id->
-            mNoteList.forEach { note->
-                if (note.id == id) {
-                    if (note.checked == true) {
-                        note.checked = false
-                    }
-                }
-            }
-        }
-        mSelectedNotes = mutableListOf()
+        NoteSingleton.instance.cleanup()
         mView.hideAdditionalSetting()
     }
 

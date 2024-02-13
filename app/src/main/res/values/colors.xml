@@ -5,22 +5,22 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
+    <color name="black">#0D0D0D</color>
     <color name="white">#FFFFFFFF</color>
 
     <color name="colorPrimary">#181818</color>
     <color name="colorPrimaryDark">#161c24</color>
-    <color name="colorPrimaryLight">#1f2a33</color>
+    <color name="colorPrimaryLight">#A9B7C3</color>
     <color name="colorAccent">#181818</color>
     <color name="colorSecondaryText">#71757A</color>
 
-    <color name="pickGreen">#014600</color>
-    <color name="pickLightBlue">#314151</color>
+    <color name="pickBlue">#4D4986</color>
+    <color name="pickGreen">#004600</color>
+    <color name="pickLightBlue">#4E5F6F</color>
     <color name="pickPeach">#252525</color>
-    <color name="pickBlue">#4D4886</color>
 
-    <color name="pick_color_1">#36185B</color>
-    <color name="pick_color_2">#254D6F</color>
+    <color name="pick_color_1">#37185B</color>
+    <color name="pick_color_2">#254D70</color>
     <color name="pick_color_3">#00585A</color>
     <color name="pick_color_4">#5B4A40</color>
 

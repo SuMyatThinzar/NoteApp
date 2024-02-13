@@ -8,7 +8,7 @@ import com.smtz.note.data.vos.NoteVO
 import com.smtz.note.persistence.daos.NoteDao
 
 // 1. Entity 2. Dao 3. Database
-@Database(entities = [NoteVO::class], version = 6, exportSchema = false)
+@Database(entities = [NoteVO::class], version = 8, exportSchema = false)
 abstract class NoteDatabase : RoomDatabase() {
 
     companion object{

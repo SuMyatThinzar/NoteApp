@@ -18,18 +18,26 @@
             <ImageView
                 android:id="@+id/btnBack"
                 android:layout_width="?attr/actionBarSize"
-                android:layout_height="match_parent"
-                android:padding="@dimen/margin_medium_3"
-                android:src="@drawable/ic_back" />
+                android:layout_height="?attr/actionBarSize"
+                android:padding="@dimen/margin_medium"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_card_medium_2"
+                android:layout_marginBottom="@dimen/margin_card_medium_2"
+                android:src="@drawable/ic_back"
+                android:background="?attr/selectableItemBackgroundBorderless"/>
 
             <ImageView
                 android:id="@+id/btnDone"
                 android:layout_width="?attr/actionBarSize"
-                android:layout_height="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:padding="@dimen/margin_medium"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_card_medium_2"
+                android:layout_marginBottom="@dimen/margin_card_medium_2"
                 android:layout_alignParentEnd="true"
-                android:padding="@dimen/margin_medium_3"
                 android:src="@drawable/ic_done"
-                android:visibility="invisible"/>
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:visibility="gone"/>
 
         </RelativeLayout>
 

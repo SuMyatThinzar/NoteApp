@@ -17,11 +17,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/margin_card_medium_2"
+            android:layout_marginEnd="@dimen/margin_medium_2"
             android:singleLine="true"
-            android:text="Heading"
+            android:text="Headinggggggggg"
             android:textColor="@color/white"
             android:textSize="@dimen/text_regular_2x"
             android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/ivPin"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:visibility="gone"
+            android:paddingTop="@dimen/margin_card_medium"
+            android:paddingEnd="@dimen/margin_small"
+            android:paddingBottom="@dimen/margin_card_medium_2"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_pin"/>
 
         <ImageView
             android:id="@+id/line"

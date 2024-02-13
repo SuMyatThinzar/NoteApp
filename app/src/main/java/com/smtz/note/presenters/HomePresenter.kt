@@ -6,5 +6,6 @@ import com.smtz.note.views.HomeView
 interface HomePresenter : BasePresenter<HomeView>, NoteDelegate {
     fun onTapCreateNote()
     fun onTapDeleteNote()
+    fun onTapPinNote()
     fun clearSelectedNotes()
 }

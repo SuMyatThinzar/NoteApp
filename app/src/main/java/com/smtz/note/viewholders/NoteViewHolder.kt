@@ -2,16 +2,17 @@ package com.smtz.note.viewholders
 
 import android.animation.ObjectAnimator
 import android.animation.PropertyValuesHolder
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.smtz.note.R
+import com.smtz.note.common.NoteSingleton
 import com.smtz.note.data.vos.NoteVO
 import com.smtz.note.databinding.ViewItemNoteBinding
 import com.smtz.note.delegates.NoteDelegate
-import com.smtz.note.utils.MONTHS_ARRAY
-import com.smtz.note.utils.SELECTED_ITEM_SCALE
-import com.smtz.note.utils.mNoteList
+import com.smtz.note.utils.SELECTED_ITEM_SCALE_LARGE
+import com.smtz.note.utils.SELECTED_ITEM_SCALE_SMALL
 
 class NoteViewHolder(private val binding: ViewItemNoteBinding, private val mDelegate: NoteDelegate) : RecyclerView.ViewHolder(binding.root) {
 
@@ -19,45 +20,41 @@ class NoteViewHolder(private val binding: ViewItemNoteBinding, private val mDele
 
     init {
         binding.root.setOnClickListener {
-            // additional setting အတွက် select လုပ်ထားတဲ့ list
-            var selectedNoteCount = 0
-
-            mNoteList.forEach {
-                if (it.checked == true) {
-                    selectedNoteCount++
-                }
-            }
-            // LongClick to SingleClick
-            when (selectedNoteCount) {
-                0 -> mDataVO?.let { mDelegate.onTapNote(it.id) }
-                else -> setListener()
+            if (NoteSingleton.instance.getSelectedNoteList().isEmpty()) {
+                mDataVO?.let { mDelegate.onTapNote(it.id) }
+            } else {
+                setNoteSelection()
             }
         }
 
         binding.root.setOnLongClickListener {
-            setListener()
+            setNoteSelection()
             true
         }
     }
 
-    private fun setListener() {
+    private fun setNoteSelection() {
         mDataVO?.let {
-            mDelegate.onLongClickNote(it.id)
-            if (binding.ivChecked.visibility == View.INVISIBLE) {
-                smallerView(true)
-            } else {
+            if (it.id in NoteSingleton.instance.getSelectedNoteList()) {
                 binding.ivChecked.visibility = View.INVISIBLE
-                smallerView(false)
+                NoteSingleton.instance.removeSelectedNote(it.id)  // add the selected note
+                smallerView(false)  // animate bigger
+            } else {
+                binding.ivChecked.visibility = View.VISIBLE
+                NoteSingleton.instance.addSelectedNote(it.id)  // add the selected note
+                smallerView(true)  // animate smaller
             }
+            mDelegate.onLongClickNote()
         }
     }
 
     fun bindData(data: NoteVO, position: Int) {
         mDataVO = data
-
         binding.tvTitle.text = data.title
         binding.tvContent.text = data.content
         binding.tvDate.text = data.date
+
+        smallerView(false)
 
         when (position % 8) {
             0 -> changeColor(R.color.pickBlue, true)
@@ -70,35 +67,33 @@ class NoteViewHolder(private val binding: ViewItemNoteBinding, private val mDele
             7 -> changeColor(R.color.pick_color_4, true)
         }
 
-        smallerView(false)
+        if (data.pinTimeStamp != 0L) {
+            binding.ivPin.visibility = View.VISIBLE
+        } else {
+            binding.ivPin.visibility = View.GONE
+        }
     }
 
     private fun changeColor(color: Int, txtWhite: Boolean) {
         binding.root.backgroundTintList = ContextCompat.getColorStateList(binding.root.context, color)
-
-//        if (txtWhite) {
-//            binding.tvTitle.setTextColor(ContextCompat.getColor(binding.root.context, R.color.white))
-//            binding.tvContent.setTextColor(ContextCompat.getColor(binding.root.context, R.color.white))
-//        } else {
-//            binding.tvTitle.setTextColor(ContextCompat.getColor(binding.root.context,R.color.black))
-//            binding.tvContent.setTextColor(ContextCompat.getColor(binding.root.context,R.color.black))
-//            binding.line.setImageDrawable(ContextCompat.getDrawable(binding.root.context, R.drawable.background_line_black))
-//        }
     }
 
     private fun smallerView(changeView: Boolean) {
         if (changeView) {
             binding.ivChecked.visibility = View.VISIBLE
 
-            val scaleDown = ObjectAnimator.ofPropertyValuesHolder(
-                itemView,
-                PropertyValuesHolder.ofFloat(View.SCALE_X, SELECTED_ITEM_SCALE),
-                PropertyValuesHolder.ofFloat(View.SCALE_Y, SELECTED_ITEM_SCALE)
-            )
-            scaleDown.duration = 200
+            if (mDataVO?.id in NoteSingleton.instance.getSelectedNoteList()) {
 
-            scaleDown.start()
+                val scaleDown = ObjectAnimator.ofPropertyValuesHolder(
+                    itemView,
+                    PropertyValuesHolder.ofFloat(View.SCALE_X, SELECTED_ITEM_SCALE_SMALL),
+                    PropertyValuesHolder.ofFloat(View.SCALE_Y, SELECTED_ITEM_SCALE_SMALL)
+                )
+                scaleDown.duration = 150
 
+                scaleDown.start()
+
+            }
             // Play the animations together
 //            val animatorSet = AnimatorSet()
 //            animatorSet.playTogether(scaleDown)
@@ -109,27 +104,12 @@ class NoteViewHolder(private val binding: ViewItemNoteBinding, private val mDele
 
             val scaleUp = ObjectAnimator.ofPropertyValuesHolder(
                 itemView,
-                PropertyValuesHolder.ofFloat(View.SCALE_X, 1f),
-                PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f)
+                PropertyValuesHolder.ofFloat(View.SCALE_X, SELECTED_ITEM_SCALE_LARGE),
+                PropertyValuesHolder.ofFloat(View.SCALE_Y, SELECTED_ITEM_SCALE_LARGE)
             )
-            scaleUp.duration = 200
+            scaleUp.duration = 300
 
             scaleUp.start()
         }
     }
-
-    //
-//    private fun setMargins(additionalMargin: Int) {
-//        val params = binding.root.layoutParams as RecyclerView.LayoutParams
-//
-//        params.setMargins(
-//            params.leftMargin + additionalMargin,
-//            params.topMargin + additionalMargin,
-//            params.rightMargin + additionalMargin,
-//            params.bottomMargin + additionalMargin
-//        )
-//
-//        binding.root.layoutParams = params
-//    }
-
 }

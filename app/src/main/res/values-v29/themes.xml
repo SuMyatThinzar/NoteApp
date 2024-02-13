@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Base application theme. -->
+
     <style name="Theme.Note" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -9,12 +10,7 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">@android:color/black</item>
+        <item name="android:forceDarkAllowed">false</item>
         <!-- Customize your theme here. -->
     </style>
-
-    <style name="Theme.Note.TransparentStatusBar" parent="Theme.Note">
-        <item name="android:fitsSystemWindows">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
-    </style>
-
 </resources>

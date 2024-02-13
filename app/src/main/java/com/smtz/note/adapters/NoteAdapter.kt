@@ -31,7 +31,17 @@ class NoteAdapter(private val mDelegate: NoteDelegate) : RecyclerView.Adapter<No
     }
 
     fun setNewData(data: List<NoteVO>){
-        mData = data.reversed()
+        mData = data
         notifyDataSetChanged()
+    }
+
+    // for facing bug in rebinding all data / ပြောင်းသွားတဲ့ position ရဲ့ item တစ်ခုထဲကိုပဲ rebind လုပ်တာ loop ပတ်ပြီး
+    fun removedSelectedItems(data: List<Long>) {
+        data.forEach { selectedNoteId ->
+//            if (mData.any {it.id == selectedNoteId}) {}
+
+            val position = mData.indexOfFirst { it.id == selectedNoteId }
+            notifyItemChanged(position)
+        }
     }
 }

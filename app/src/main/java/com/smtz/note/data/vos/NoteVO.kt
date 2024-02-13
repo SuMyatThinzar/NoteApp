@@ -21,4 +21,10 @@ data class NoteVO(
     @ColumnInfo(name = "date")
     val date: String?,
 
-    )
+    @ColumnInfo(name = "pinTimeStamp")
+    var pinTimeStamp: Long? = 0L,
+
+    @ColumnInfo(name = "isPinned")
+    var isPinned: Boolean? = false,
+
+)

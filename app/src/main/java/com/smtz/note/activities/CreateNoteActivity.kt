@@ -63,7 +63,7 @@ class CreateNoteActivity : AppCompatActivity(), CreateNoteView {
         }
 
         // ဒီ activity ကို‌ရောက်တာနဲ့ etText ကို autoFocus ပြီး keyboard ပေါ်အောင်လုပ်
-        binding.etText.requestFocus()
+        binding.etTitle.requestFocus()
 
         // .post to run a delayed task and set cursor position to the end
         binding.etText.post {
@@ -75,8 +75,8 @@ class CreateNoteActivity : AppCompatActivity(), CreateNoteView {
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY)
 
         // text မရှိရင် Done button ပျောက်
-        setUpTextChangedListener(binding.etTitle)
-        setUpTextChangedListener(binding.etText)
+        setUpTextChangedListener(binding.etTitle, binding.etText)
+        setUpTextChangedListener(binding.etText, binding.etTitle)
 
         binding.btnDone.setOnClickListener {
             if (mNote == null) {
@@ -90,11 +90,11 @@ class CreateNoteActivity : AppCompatActivity(), CreateNoteView {
         }
     }
 
-    private fun setUpTextChangedListener(edt: EditText) {
+    private fun setUpTextChangedListener(edt: EditText, secondEdt: EditText) {
         edt.addTextChangedListener(object : TextWatcher {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (s.isNullOrEmpty() && binding.etText.text.trim().toString() == "") {
+                if (s.isNullOrEmpty() && secondEdt.text.trim().toString() == "") {
                     binding.btnDone.visibility = View.INVISIBLE
                 } else {
                     binding.btnDone.visibility = View.VISIBLE
